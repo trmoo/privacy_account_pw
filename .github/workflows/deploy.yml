@@ -1,0 +1,63 @@
+# 내 계정 지킴이 — © 2026 티쳐무 · 모든 권리 보유
+# 푸시할 때마다 시험을 돌리고 빌드해 GitHub Pages 로 올린다. dist 는 커밋하지 않는다.
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+
+      - name: 시험
+        run: npm test
+
+      # 시험은 화면 파일(DOM 을 만지는 곳)을 그려 보지 않는다.
+      # 그래서 이 단계를 빼면 화면 파일의 문법 오류가 빌드에서야 터진다. 빼지 말 것.
+      # 통신 코드 금지 · 비밀번호 저장 금지 · 바깥 주소 제한도 여기서 본다.
+      - name: 소스 전수 검사
+        run: npm run check:syntax
+
+      - run: npm run build
+
+      # 크기 · 저작권 표시 · CSP(통신 차단) · 바깥 주소 목록 · 바깥 자원
+      - name: 빌드 결과 점검
+        run: npm run check:dist
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+        continue-on-error: true
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

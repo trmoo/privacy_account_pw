@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.log
+tmp/
+# 학생이 내려받은 활동지는 저장소에 넣지 않는다
+계정지킴이_*.html
+# 참고한 블로그의 그림·원본 자료(남의 저작물)는 올리지 않는다
+*.pdf
+*.hwp
+*.hwpx
+*.png
+*.jpg
+*.jpeg
+# 로컬 편집기 설정
+.claude/
