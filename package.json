@@ -1,0 +1,21 @@
+{
+  "name": "privacy_account_pw",
+  "version": "1.0.0",
+  "description": "내 계정 지킴이 — 가입한 사이트 찾기 · 비밀번호 안전 검사 · 안전한 비밀번호 만들기를 익히는 정보 수업 실습 앱",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node test/run.mjs",
+    "check:syntax": "node tools/check-syntax.mjs",
+    "check:dist": "node tools/check-dist.mjs"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}
