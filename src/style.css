@@ -38,7 +38,10 @@ html, body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Pretendard', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', system-ui, sans-serif;
-  font-size: 18px;
+  /* 화면의 모든 글자 크기는 rem(뿌리 글자 크기)에 매여 있다.
+     그래서 이 값 하나만 바꾸면 화면 전체가 같은 비율로 커지거나 작아진다.
+     2026-10-14 사용자 지시로 18px → 14.4px (0.8배). */
+  font-size: 14.4px;
   line-height: 1.65;
   -webkit-text-size-adjust: 100%;
 }
@@ -471,7 +474,7 @@ input:focus, select:focus, textarea:focus { outline: 3px solid rgba(15, 110, 140
 /* ─────────────────────────── 좁은 화면 ─────────────────────────── */
 
 @media (max-width: 760px) {
-  html, body { font-size: 16px; }
+  html, body { font-size: 12.8px; }  /* 16px 의 0.8배 */
   .topbar { padding: 12px 14px 0; }
   .main { padding: 16px 14px 32px; }
   .safe-bar { padding: 6px 14px; }
