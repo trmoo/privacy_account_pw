@@ -17,7 +17,9 @@ if (크기 < 100000) 잘못.push(`빌드 결과가 너무 작다 (${크기} 바�
 
 const 티쳐무 = (글.match(/티쳐무/g) || []).length;
 if (티쳐무 < 3) 잘못.push(`저작권 표시가 ${티쳐무}곳뿐이다 — esbuild.legalComments 가 'inline' 인지 볼 것`);
-if (!글.includes('/*!')) 잘못.push('/*! 배너가 지워졌다');
+// ⚠ 배너는 둘째 줄까지 함께 본다 — 첫 줄은 CSS·HTML 머리 주석과 겹쳐, Vite 8 이 스크립트 배너를 지워도 통과했다(2026-11-09 postBanner 로 고침)
+const 배너 = "/*! 내 계정 지킴이 — © 2026 티쳐무 · 모든 권리 보유\n * 학교 수업 목적으로만 이용해 주세요. 무단 배포·상업적 이용을 금합니다. */";
+if (!글.includes(배너)) 잘못.push('스크립트 /*! 배너가 지워졌다 — vite.config.js 의 output.postBanner 를 볼 것(Vite 8 은 banner 를 압축에서 지운다)');
 if (!글.includes('학교 수업 목적으로만 이용해 주세요')) 잘못.push('화면 푸터가 없다');
 
 const csp = 글.match(/<meta http-equiv="Content-Security-Policy" content="([^"]*)"/);
